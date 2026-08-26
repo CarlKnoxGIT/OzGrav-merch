@@ -136,7 +136,7 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;f
   }
   function panelDone(mine){
     var fc=findColour(mine.product,mine.colour),cname=fc?fc.c.name:mine.colour,hex=fc?fc.c.hex:"#888";
-    return '<div class="panel done"><h2>Thanks, '+esc(mine.name)+'.</h2><p>Your pick has been sent to Carl. If your email didn’t open, email '+CONTACT+' with your choice below.</p>'
+    return '<div class="panel done"><h2>Thanks, '+esc(mine.name)+'.</h2><p>Your pick has been recorded for the retreat order.</p>'
       +'<div class="yourpick"><span class="dot" style="background:'+hex+'"></span>'+esc(prodName(mine.product))+' &middot; '+esc(cname)+'</div>'
       +'<div class="change"><button type="button" class="linkbtn" id="change">Change my pick</button></div></div>';
   }
