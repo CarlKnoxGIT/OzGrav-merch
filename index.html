@@ -52,6 +52,12 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
 .group-head h2{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0}
 .group-head .note{font-size:13px;color:var(--muted);text-align:right}
 
+.blurb{margin:-2px 0 14px;color:var(--muted);max-width:62ch}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:12px 26px;margin:0 0 20px}
+@media (max-width:560px){.feats{grid-template-columns:1fr;gap:12px}}
+.feat{font-size:14.5px;color:var(--muted);line-height:1.45}
+.feat b{display:block;font-family:var(--disp);font-weight:600;font-size:11.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink);opacity:.85;margin-bottom:3px}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media (max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}}
 .tile{position:relative;border:1px solid var(--hair);background:var(--panel);border-radius:14px;
@@ -133,7 +139,10 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
   var FORMSPREE = "https://formspree.io/f/xzebanlw";
   var ORG_HASH = "e435a00c5ace2641f17e3d94202ec6a97f555082d3e1cbd46b3d1ef47eb61499";
   var PRODUCTS = [
-    { key:"cup", name:"Camino reusable coffee cup", note:"Regular latte / flat white size", colours:[
+    { key:"cup", name:"Camino reusable coffee cup", note:"Regular latte / flat white size",
+      blurb:"Made for your regular latte or flat white, bringing a confident reusable ritual to coffee on the move.",
+      feats:[["Temperature","Keeps coffee hot for up to 3 hours; double-wall insulation also suits cold drinks."],["Travel ready","Fits standard coffee machines and car cup holders, with an easy-clean click-back lid."]],
+      colours:[
       {key:"coal",name:"Coal",hex:"#2b2b2d",img:IMG.cup_coal},
       {key:"breezy",name:"Breezy",hex:"#bcd9d5",img:IMG.cup_breezy},
       {key:"emerald",name:"Emerald",hex:"#14606c",img:IMG.cup_emerald},
@@ -141,7 +150,10 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
       {key:"tuscan",name:"Tuscan",hex:"#b3654c",img:IMG.cup_tuscan},
       {key:"pinot",name:"Pinot",hex:"#6a1f37",img:IMG.cup_pinot}
     ]},
-    { key:"bottle", name:"Move drink bottle", note:"660ml / 22oz \u00b7 ceramic lined", colours:[
+    { key:"bottle", name:"Move drink bottle", note:"660ml / 22oz \u00b7 ceramic lined",
+      blurb:"Sports functionality meets sustainable elegance, for those always on the move.",
+      feats:[["Build","Lightweight and chemical-free with a ceramic-lined interior."],["Lid","Leak-proof flip-sip lid with a pure titanium straw and a soft wrist strap."]],
+      colours:[
       {key:"coal",name:"Coal",hex:"#2b2b2d",img:IMG.bot_coal},
       {key:"breezy",name:"Breezy",hex:"#bcd9d5",img:IMG.bot_breezy},
       {key:"emerald",name:"Emerald",hex:"#14606c",img:IMG.bot_emerald},
@@ -192,7 +204,10 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
     var locked=!!mine;
     var out="";
     PRODUCTS.forEach(function(p){
-      out+='<section class="group"><div class="group-head"><h2>'+esc(p.name)+'</h2><span class="note">'+esc(p.note)+' · six colours</span></div><div class="tiles">';
+      out+='<section class="group"><div class="group-head"><h2>'+esc(p.name)+'</h2><span class="note">'+esc(p.note)+' · six colours</span></div>'
+        +(p.blurb?'<p class="blurb">'+esc(p.blurb)+'</p>':'')
+        +(p.feats?'<div class="feats">'+p.feats.map(function(f){return '<div class="feat"><b>'+esc(f[0])+'</b>'+esc(f[1])+'</div>';}).join('')+'</div>':'')
+        +'<div class="tiles">';
       p.colours.forEach(function(c){
         var isMine=mine&&mine.product===p.key&&mine.colour===c.key;
         var press=(!locked&&selected&&selected.product===p.key&&selected.colour===c.key)||isMine;
