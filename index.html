@@ -323,7 +323,7 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
       : "You're locked in. Change it any time before we order.";
     return '<div class="panel done"><h2>Thanks, '+esc(mine.name)+'.</h2><p>'+esc(msg)+'</p>'
       +'<div class="yourpick"><span class="dot" style="background:'+hex+'"></span>'+esc(prodName(mine.product))+' &middot; '+esc(cname)+'</div>'
-      +(liveTally()?resultsHTML(state):'<p class="readonly-note">Picks go straight to the organisers, so there\u2019s no public tally here \u2014 Carl has the running totals.</p>')
+      +(liveTally()?resultsHTML(state):'')
       +'<div class="change"><button type="button" class="linkbtn" id="change">Change my pick</button></div></div>';
   }
 
