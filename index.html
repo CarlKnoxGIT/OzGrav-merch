@@ -172,6 +172,11 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
   function findColour(pk,ck){for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].key===pk){for(var j=0;j<PRODUCTS[i].colours.length;j++){if(PRODUCTS[i].colours[j].key===ck)return {p:PRODUCTS[i],c:PRODUCTS[i].colours[j]};}}}return null;}
   function prodName(k){var f=null;PRODUCTS.forEach(function(p){if(p.key===k)f=p.name;});return f||k;}
 
+  // The in-page tally only works where the page can save new versions of itself
+  // (the artifact runtime). On the static site picks go to Formspree instead,
+  // so the counters would sit at zero for everyone — hide them there.
+  function liveTally(){return !!(window.claude&&window.claude.use);}
+
   // latest response per voter
   function latest(state){var m={};(state.responses||[]).forEach(function(r){var p=m[r.voter];if(!p||r.ts>p.ts)m[r.voter]=r;});return Object.keys(m).map(function(k){return m[k];});}
 
@@ -318,7 +323,7 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
       : "You're locked in. Change it any time before we order.";
     return '<div class="panel done"><h2>Thanks, '+esc(mine.name)+'.</h2><p>'+esc(msg)+'</p>'
       +'<div class="yourpick"><span class="dot" style="background:'+hex+'"></span>'+esc(prodName(mine.product))+' &middot; '+esc(cname)+'</div>'
-      +resultsHTML(state)
+      +(liveTally()?resultsHTML(state):'<p class="readonly-note">Picks go straight to the organisers, so there\u2019s no public tally here \u2014 Carl has the running totals.</p>')
       +'<div class="change"><button type="button" class="linkbtn" id="change">Change my pick</button></div></div>';
   }
 
@@ -335,7 +340,7 @@ h1{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1;
       +'<img class="hero" src="'+IMG.hero+'" alt="OzGrav-branded Camino cup in Emerald and Move bottle in Coal">'
       +'<canvas id="chirp" aria-hidden="true"></canvas>'
       +tilesHTML(mine)
-      +(mine?panelDone(state,mine):panelVote()+resultsHTML(state))
+      +(mine?panelDone(state,mine):panelVote()+(liveTally()?resultsHTML(state):''))
       +'<p class="footer">OzGrav — ARC Centre of Excellence for Gravitational Wave Discovery. Questions? <a href="mailto:'+CONTACT+'" style="color:var(--accent)">'+CONTACT+'</a></p>'
       +'</div>';
     if(mine){wireDone();}else{wireVote();}
